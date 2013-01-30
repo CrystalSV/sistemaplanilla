@@ -1,0 +1,109 @@
+{% extends 'CrystalrutasBundle:Default:index.html.twig' %}
+
+{% block center %}
+	<div class="top-bar">          
+		<div align="center"><h1>Listado de empleados</h1></div>
+	</div>
+	<br /><br /><br /><br /><br /><br />
+	<form method="post">
+	<table style="font-weight: bold;" class="searchBox">
+		<tr>
+			<td>C&oacute;digo</td>
+			<td>
+			  <input type="search" name=""  list="Codigo" clear/>
+			 </td> 
+			 <td>
+				 <datalist id="Codigo">
+					{% for empleado in Empleados %}
+						<option value="{{empleado.Codigo}}" />
+					{% endfor %}
+				  </datalist> 
+			  </td>
+			<td>Nombres</td>
+			<td>
+			  <input type="search" name=""  list="Nombre"/>
+			 </td>
+			 <td>
+				 <datalist id="Nombre">
+					{% for empleado in Empleados %}
+						<option value="{{empleado.Nombre}}" />
+					{% endfor %}
+				  </datalist>
+			  </td> 
+			<td>Departamento</td>
+			<td>
+				<input type="search" name="" id="" list="Departamentos"/>
+					
+			</td>
+			<td>
+				<datalist id="Departamentos">
+					{% for empleado in Empleados %}
+						{% for departamento in Departamentos %}
+						  {% if departamento == empleado.idDepartamento %}
+						 	<option value="{{ departamento.Nombre }}" />
+						   {% endif %}
+						{% endfor %}
+					{% endfor %}
+				    </datalist>
+			</td>
+
+
+			<td><input type="submit" name="btnSearch" value="Buscar" /></td>
+		</tr>
+	</table>
+	</form>
+
+	<br /> <br /><br /><br />
+	<div class="table" style="border: 1px solid #000;">
+		<div id="generalData" style="display: block">
+			<table class="listing form" cellpadding="0" cellspacing="0" style="width: 100%; margin: 0 auto;border: 0px;">
+				<tr>
+					<td><b>C&oacute;digo</b></td><td><b>Nombres</b></td><td><b>Apellidos</b></td><td><b>Departamento</b></td><td><b>Puesto</b></td><td><b>Perfil Completo</b></td><td><b>Modificar</b></td><td><b>Eliminar</b></td>
+				</tr>
+				{% for empleado in  pager.getResults %}
+					<tr>
+						<td>{{ empleado.Codigo }}</td>
+						<td>{{ empleado.Nombre }}</td>
+						<td>{{ empleado.Apellido }}</td>
+						<td>
+							{% for departamento in Departamentos %}
+								{% if departamento == empleado.idDepartamento %}
+									{{ departamento.Nombre }}
+								{% endif %}
+							{% endfor %}
+						</td>
+						<td>		
+							{{ empleado.Puesto }}
+						</td>
+						<td align="center">
+							<a href="{{ path('Empleado', {'id' : (empleado.id)}) }}" alt="Ver Perfil Completo" title="Ver Perfil Completo">
+								<img src="{{ asset('img/ver.png') }}" />
+							</a>
+						</td>
+						<td>
+							<a href="{{ path('modificarEmpleado', {'id' : (empleado.id)}) }}"alt="Modificar Empleado" title="Modificar Empleado">
+							    <img src="{{ asset('img/edit.png') }}">
+							 </a>
+						</td>
+						<td>
+							<a href="{{ path('eliminarEmpleado', {'id' : (empleado.id)}) }}" onClick="return confirmDelete();">
+								<img src="{{ asset('img/delete.png') }}" wwidth="24" height="24" />
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+				<tr>
+					<td><b>...</b></td><td><b>...</b></td><td><b>...</b></td><td><b>...</b></td><td><b>...</b></td><td><b>...</b></td><td><b>...</b></td><td><b><a href="{{ path('agregarEmpleado') }}" alt="Agregar Empleado" title="Agregar Empleado"><img src="{{ asset('img/new.png') }} " width="24" height="24" /></a></b></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+			<br /> <br />
+			<div align="center">
+				{% if pager.isPaginable %}
+
+					{{ paginate(pager,'listaEmpleados') }}
+
+				{% endif %}
+			</div>
+{% endblock %}

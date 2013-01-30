@@ -1,0 +1,387 @@
+{% extends 'CrystalrutasBundle:Default:index.html.twig' %}
+
+{% block center %}
+	<script>
+	var i = 0;
+	var j = 0;
+	var send = 0;
+
+	function changeTab(Tab, tab1, tab2, tab3)
+	{
+		tab = document.getElementById(Tab);
+		tab.style.display = 'block';
+		tab.className = 'active';
+		document.getElementById(tab1).style.display = 'none';
+		document.getElementById(tab1).className = '';
+		document.getElementById(tab2).style.display = 'none';
+		document.getElementById(tab2).className = '';
+		document.getElementById(tab3).style.display = 'none';
+		document.getElementById(tab3).className = '';
+
+	}
+
+	function envForm()
+	{
+		send++;
+		if(send == 1)
+		{
+			alert("Verifique que todos los campos hallan sido llenados, de lo contrario no podra ingresar al sistema el nuevo empleado.");
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	function clonarTel(id)
+	{
+		i++;
+		var tr = document.getElementById(id).cloneNode(true);
+
+		tr.id = 'childPhone' + i;
+		tr.getElementsByTagName('td')[0].innerHTML = '<b>Telefono' + (i+1) + '</b>';
+		tr.getElementsByTagName('td')[1].getElementsByTagName('input')[0].value= '';
+		tr.getElementsByTagName('td')[1].getElementsByTagName('input')[0].name= 'txtTel' + i;
+		tr.getElementsByTagName('td')[2].innerText = '';
+		tr.getElementsByTagName('td')[2].innerHTML = '';
+		tr.getElementsByTagName('td')[3].innerHTML = '<a onClick="borrarTel(\'childPhone' + i + '\')" style="cursor: pointer;">Eliminar</a>';
+
+		document.getElementById('numPhones').value = i + 1;
+
+		document.getElementById('parentPhone').appendChild(tr);
+	}
+
+	function clonarDep(id)
+	{
+		j++;
+
+		var tr = document.getElementById(id).cloneNode(true);
+
+		tr.id = 'childDependents' + j;
+		tr.getElementsByTagName('td')[0].innerHTML = '<b>Dependiente' + (j+1) + '</b>';
+		tr.getElementsByTagName('td')[1].getElementsByTagName('input')[0].value = '';
+		tr.getElementsByTagName('td')[1].getElementsByTagName('input')[0].name = 'txtDep' + j;
+		tr.getElementsByTagName('td')[2].getElementsByTagName('select')[0].name = 'txtTypeDep' + j;
+		tr.getElementsByTagName('td')[3].innerText = ''; 
+		tr.getElementsByTagName('td')[3].innerHTML = '';
+		tr.getElementsByTagName('td')[4].innerHTML = '<a onClick="removeChildDep(\'childDependents' + j + '\')" style="cursor: pointer;">Eliminar</a>';
+
+		document.getElementById('numDep').value = j + 1;
+
+		document.getElementById('parentDependents').appendChild(tr);
+	}
+
+	function borrarTel(id)
+	{
+		var hijo = document.getElementById(id);
+		var tata = hijo.parentNode;
+		tata.removeChild(hijo);
+
+		i--;
+
+		document.getElementById('numDep').value = i + 1;
+	}
+
+	function removeChildDep(id)
+	{
+		child = document.getElementById(id);
+		parent = child.parentNode;
+		parent.removeChild(child);
+
+		j--;
+
+		document.getElementById('numPhones').value = j + 1;
+	}
+	function validSelects(select)
+	{
+		var valid = true;
+		if(document.getElementById(select).value == 0)
+		{
+			document.getElementById(select).className = 'selectError';
+			valid = false;
+		}
+		return valid;
+	}
+</script>
+<div class="top-bar">                    
+    <div align="center"><h1>Gesti&oacute;n de empleados</h1></div>
+</div>
+<br /><br /><br /><br /><br /><br />
+<table align="center">
+	<tr><td>
+	<ul id="top-navigation2">
+		<li><a onClick="changeTab('generalData', 'dataPlanilla', 'personalData', 'otherData')">Datos Generales</a></li>
+		<li><a onClick="changeTab('dataPlanilla', 'personalData', 'generalData', 'otherData')">Datos de planilla</a></li>
+		<li><a onClick="changeTab('personalData', 'dataPlanilla', 'generalData', 'otherData')">Datos Personales</a></li>
+		<li><a onClick="changeTab('otherData', 'personalData', 'dataPlanilla', 'generalData')">Otros Datos</a></li>
+	</ul>
+	</td></tr>
+</table>
+<form method="post" enctype="multipart/form-data"  onSubmit=" return validSelects('txtEstado')">
+<div class="table">
+	<div id="generalData" style="display: block">
+		<table class="listing form" cellpadding="0" cellspacing="0" style="width: 80%; margin: 0 auto;border: 0px;">
+	        <tr>
+	            <td><strong>Codigo del Empleado</strong></td>
+				<td><input type="text" name="txtCode" class="text" required  
+				pattern="\d{0,9}" maxlength="3" title="carateres-numericos maximo 000" value=""/></td>
+	        </tr>
+
+	        <tr>
+	            <td><strong>Nombres</strong></td>
+	            <td><input type="text" name="txtName" class="text"  maxlength="50" required value="" 
+	             /></td>
+	        </tr>
+	        <tr>
+				<td><strong>Apellidos</strong></td>
+				<td><input type="text" name="txtApe" class="text" maxlength="50" required  value=""/></td>
+			</tr>
+			<input type="hidden" name="txtEst" value="1"/>
+			<tr>
+				<td><strong>N&uacute;mero de DUI</strong></td>
+				<td><input type="text" name="txtDUI" class="text" required pattern="\d{8}-\d{1}"  title="formato correcto: 00000000-0" maxlength="10" value=""/></td>
+			</tr>
+			<tr>
+				<td><strong>Fecha de expedici&oacute;n del DUI</strong></td>
+				<td><input type="date" name="txtFechaDui" class="text" required value=""/></td>
+			</tr>
+			<tr>
+				<td><strong>Lugar de expideci&oacute;n del DUI</strong></td>
+				<td><input type="text" name="txtLugarDui" class="text" required value="" maxlength="10"/></td>
+			</tr>
+			<tr>
+				<td><strong>N&uacute;mero de NIT</strong></td>
+				<td><input type="text" name="txtNIT" class="text" required pattern="\d{4}-\d{6}-\d{3}-\d{1}"  title="formato correcto: 0000-000000-000-0" maxlength="17" value=""/></td>
+			</tr>
+			<tr>
+				<td><strong>N&uacute;mero de ISSS</strong></td>
+				<td><input type="text" name="txtISSS" class="text" required pattern="\d{9}"
+				maxlength="9" value="" title="formato correcto: 000000000"/></td>
+			</tr>
+			<tr>
+				<td><strong>Departamento laboral</strong></td>
+				<td>
+						<select type="text" name="txtDeptLab" required class="text">
+							<option value="0" >Seleccione una opci&oacute;n...</option>
+							{% for dep in Dep %}
+								<option value="{{ dep.id }}">{{ dep.Nombre }}</option>
+							{% endfor %}
+						</select>
+				</td>
+			</tr>
+			<tr>
+				<td><strong>Puesto laboral</strong></td>
+				<td><input type="text" name="txtPuesto" class="text" required maxlength="25" value=""/></td>
+			</tr>
+			<tr>
+				<td><strong>Sexo</strong></td>
+				<td>
+					<select type="text" name="txtSexo" class="text">
+							<option value="0">Seleccione una opci&oacute;n...</option>
+							<option >Masculino</option>
+							<option >Femenino</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><strong>Foto</strong></td>
+				<td><input type="file"  name="txtFoto" class="text" style="height: auto;" required/></td>
+			</tr>
+		</table>
+	</div>
+	<div id="dataPlanilla" style="display: none">
+		<table class="listing form" cellpadding="0" cellspacing="0" style="width: 80%; margin: 0 auto;border: 0px;">
+			<tr>
+				<td><strong>Salario</strong></td>
+				<td><input type="text"  name="txtSalario" class="text" required value="" maxlength="7"/></td>
+			</tr>
+			<tr>
+				<td><strong>Forma de pago</strong></td>
+				<td>
+						<select type="text" name="txtPago" class="text">
+							<option value="">Seleccione una opci&oacute;n...</option>
+							<option value="Efectivo" >Efectivo</option>
+							<option value="Cheque" >Cheque</option>
+							<option value="Transferencias Bancarias" >Transferencias Bancarias</option>
+						</select>
+				</td>
+			</tr>
+			<tr>
+				<td><strong>Turno</strong></td>
+				<td>
+						<select type="text" name="txtTurno" class="text">
+							<option value="0">Seleccione una opci&oacute;n...</option>
+							<option >Matutino</option>
+							<option >Vespertino</option>
+							<option >Nocturno</option>
+							<option >Mixto</option>
+						</select>
+
+				</td>
+			</tr>
+			<tr>
+				<td><strong>AFP de afiliaci&oacute;n</strong></td>
+				<td>
+						<select type="text" name="txtAfp" class="text">
+							<option value="0">Seleccione una opci&oacute;n...</option>
+							{% for Afp in Afp %}
+								<option value="{{ Afp.id }}">{{ Afp.Nombre }}</option>
+							{% endfor %}
+						</select>
+				</td>
+			</tr>
+			<tr>
+				<td><strong>N&uacute;mero de AFP</strong></td>
+				<td><input type="text" pattern="\d{11}" name="txtNumAfp" maxlength="11" class="text" required title="formato correcto: 00000000000" value=""/></td>
+			</tr>
+			<tr>
+				<td><strong>Banco de pago</strong></td>
+				<td>
+						<select type="text" name="txtBanco" class="text">
+							<option value="">Seleccione una opci&oacute;n...</option>
+							{% for bancos in Bancos %}
+								<option value="{{ bancos.id }}">{{ bancos.Nombre }}</option>
+							{% endfor %}
+						</select>
+				</td>
+			</tr>
+			<tr>
+				<td><strong>Cuenta de Pago</strong></td>
+				<td><input type="text" pattern="\d{11}" name="txtCuetaBan" class="text" required title="formato correcto: 00000000000" maxlength="11" value=""/></td>
+			</tr>
+			<tr>
+				<td><strong>Tipo de empleado</strong></td>
+				<td>
+						<select type="text" name="txtTipo" class="text" value="">
+							<option value="0">Seleccione una opci&oacute;n...</option>
+							<option >Fijo</option>
+							<option >Por horas</option>
+							<option >Por servicios</option>
+						</select>
+				</td>
+			</tr>
+			<tr>
+				<td><strong>Empleado bajo contrato</strong></td>
+				<td>
+						<select type="text" name="txtBajoContrato" class="text" value="">
+							<option value="">Seleccione una opci&oacute;n...</option>
+							<option value="Si" >Si</option>
+							<option value="No">No</option>
+						</select>
+				</td>
+			</tr>
+			<tr>
+				<td><strong>N&uacute;mero de Contrato</strong></td>
+				<td><input type="text" name="txtContrato" class="text" pattern="\d{3}-\d{4}-\d{6}"
+				title="formato correcto: 000-0000-000000" maxlength="15" required value=""/></td>
+			</tr>
+		</table>
+	</div>
+	<div id="personalData" style="display: none">
+		<table class="listing form" cellpadding="0" cellspacing="0" style="width: 80%; margin: 0 auto;border: 0px;">
+			<tr>
+				<td><strong>Direcci&oacute;n</strong></td>
+				<td><textarea name="txtDir" class="text" style="width:262px;" required maxlength="100"></textarea></td>
+			</tr>
+			<tr>
+				<td><strong>Departamento de residencia</strong></td>
+				<td><input type="text" name="txtDepto" class="text" required value="" maxlength="40"/></td>
+			</tr>
+			<tr>
+				<td><strong>Municipio de residencia</strong></td>
+				<td><input type="text" name="txtMuni" class="text" required value="" maxlength="40"/></td>
+			</tr>
+			<tr>
+				<td><strong>Fecha  de nacimiento</strong></td>
+				<td><input type="date" name="txtFechaN" class="text" required value=""/></td>
+			</tr>
+			<tr>
+				<td><strong>Lugar de nacimiento</strong></td>
+				<td><input type="text" name="txtLugarN" class="text" required value="" maxlength="100"/></td>
+			</tr>
+			<tr>
+				<td><strong>Nacionalidad</strong></td>
+				<td><input type="text" name="txtNacionalidad" class="text" required value="" maxlength="25"/></td>
+			</tr>			
+			<tr>
+				<td><strong>Correo El&eacute;ctronico</strong></td>
+				<td><input type="email" name="txtMail" class="text" required value="" maxlength="50"/></td>
+			</tr>
+			<tr>
+				<td><strong>Estado Civil</strong></td>
+				<td>
+						<select type="text" name="txtEstadoCivil" class="text" value="">
+							<option value="0">Seleccione una opci&oacute;n...</option>
+							<option >Soltero</option>
+							<option >Casado</option>
+							<option >Divorciado</option>
+							<option >Viudo</option>
+							<option >Union Libre</option>
+						</select>
+				</td>
+			</tr>
+			<tr>
+				<td><strong>Nombre del padre</strong></td>
+				<td><input type="text" name="txtPadre" class="text" required value="" maxlength="75"/></td>
+			</tr>
+			<tr>
+				<td><strong>Nombre de la madre</strong></td>
+				<td><input type="text" name="txtMadre" class="text" required value="" maxlength="75"/></td>
+			</tr>
+		</table>
+		<table class="listing form" cellpadding="0" cellspacing="0" style="width: 80%; margin: 0 auto;border: 0px;">
+			<tbody id="parentPhone">
+				<tr id="childPhone">
+					<td><strong>Tel&eacute;fono 1</strong></td>
+					<td><input type="tel"  name="txtTel0" class="text" required pattern="\d{4}-\d{4}"  title="0000-0000" maxlength="9"/></td>
+					<td><input type="button" name="add" value="Agregar" onClick="clonarTel('childPhone')"/></td>
+					<td></td>					
+				</tr>
+				<input type="hidden" name="numPhones" id="numPhones" value="1" />
+			</tbody>
+		</table>
+	</div>
+	<div id="otherData" style="display: none">
+		<table class="listing form" cellpadding="0" cellspacing="0" style="width: 80%; margin: 0 auto;border: 0px;">
+			<tr>
+				<td><strong>Nombre seg&uacute;n ISSS</strong></td>
+				<td><input type="text" name="txtNameSeg" class="text"required value="" maxlength="75"/></td>
+			</tr>
+			<tr>
+				<td><strong>Nombre seg&uacute;n NIT</strong></td>
+				<td><input type="text" name="txtNameNit" class="text" required value="" maxlength="75"/></td>
+			</tr>
+			<tr>
+				<td><strong>Observaciones</strong></td>
+				<td><textarea  name="txtObser" class="text" style="width:262px;" required maxlength="100"></textarea></td>
+			</tr>
+		</table>
+		<table class="listing form" cellpadding="0" cellspacing="0" style="width: 100%; margin: 0 auto;border: 0px;">
+			<tbody id="parentDependents">
+				<tr id="childDependents">
+					<td><strong>Dependiente 1</strong></td>
+					<td><input type="text" name="txtDep0" class="text" required/></td>
+					<td>
+						<select name="txtTypeDep0">
+							<option value="0">Seleccione una opci&oacute;n...</option>
+							<option>Familia</option>
+							<option>Conocido</option>
+						</select>
+					</td>
+					<td><input type="button" name="add" value="Agregar" onClick="clonarDep('childDependents')"/></td>
+					<td></td>					
+				</tr>
+				<input type="hidden" name="numDep" id="numDep" value="1" />
+			</tbody>
+		</table>
+	</div>
+	<br /><br /><br />
+	<div id="send" align="center">
+        <div style="display: inline-block;" align="center"><input type="submit" value="Aceptar" name="btnAddEmp" class="button" onCLick="return envForm()" value="agregarEmpleado" /></div>
+         <div style="display: inline-block;" align="center"><input type="button" name="btnCancel" class="button" onCLick="document.location.href="{{ path('listaEmpleados', {page: 'page'}) }}" value="Cancelar" /></div>
+    </div>
+</div>
+</form>
+
+{% endblock %}

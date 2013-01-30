@@ -1,0 +1,195 @@
+{% extends 'CrystalrutasBundle:Default:index.html.twig' %}
+
+{% block center %}
+	
+	<div class="top-bar">      
+	<div style="float: left;">
+		<div align="left">
+			<h1>{{ Empleado.Nombre}} {{ Empleado.Apellido }}</h1>
+		</div>
+		<div>
+			<h3 style="color: #AAA;">{{ Empleado.Puesto }} en el Departamento de 
+				{% for dep in Depto %}
+					{% if dep == Empleado.idDepartamento %}
+						{{ dep.Nombre }}
+					{% endif %}
+				{% endfor %}
+			</h3>
+		</div>
+		<div class="searchBox"><h3 style="margin: 3px;">Datos Generales</h3>
+		</div>
+		<div class="table" style="width: 100%; margin-top: 10px;">
+			<table class="listing form" cellpadding="0" cellspacing="0" style="width: 100%;">
+				<tr>
+					<td style="text-align: left"><b>Nombres:</b></td><td style="text-align: left">{{ Empleado.Nombre }}</td>
+				</tr>
+				<tr> 
+					<td style="text-align: left"><b>Apellidos:</b></td><td style="text-align: left">{{ Empleado.Apellido }}</td>
+				</tr>
+				<tr>
+					<td style="text-align: left"><b>Estado del empleado:</b></td><td style="text-align: left">
+					{% if Empleado.estado == '1' %}
+						Activo
+						{% else %}
+						Inactivo
+					{% endif %}
+
+						
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: left"><b>DUI:</b></td><td style="text-align: left"> {{ Empleado.DUI }}</td>
+				</tr>
+				<tr>
+					<td style="text-align: left"><b>Lugar de expedici&oacute;n del DUI:</b></td><td style="text-align: left">{{ Empleado.lugarExpedicion }}</td>
+				</tr>
+				<tr>
+					<td style="text-align: left"><b>Fecha de expedici&oacute;n del DUI:</b></td><td style="text-align: left">{{ Empleado.fechaExpedicion | date('m/d/Y') }}</td>
+				</tr>
+				<tr>
+					<td style="text-align: left"><b>NIT:</b></td><td style="text-align: left">{{ Empleado.NIT }}</td>
+				</tr>
+				<tr>
+					<td style="text-align: left"><b>ISSS:</b></td><td style="text-align: left">{{ Empleado.ISSS }}</td>
+				</tr>
+				<tr>
+					<td style="text-align: left"><b>Departamento laboral:</b></td><td style="text-align: left">{{ Empleado.Depto }}</td>
+				</tr>
+				<tr>
+					<td style="text-align: left"><b>Puesto laboral:</b></td><td style="text-align: left">{{ Empleado.puesto }}</td>
+				</tr>
+				<tr>
+					<td style="text-align: left"><b>Sexo:</b></td><td style="text-align: left">{{ Empleado.sexo }}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div style="float: right;">
+		<a id="single_2" rel="group" href="{{ asset(Empleado.foto) }}">
+			&nbsp;<img src="{{ asset(Empleado.Foto) }}" style="width: 250px; height: auto;" alt="" />
+		</a>
+	</div>
+</div>
+<br /><br /><br />
+<div style="float: left; width: 100%;">
+	<div class="searchBox"><h3 style="margin: 3px;">Datos de planilla</h3></div>
+	<div class="table" style="width: 100%; margin-top: 10px;">
+		<table class="listing form" cellpadding="0" cellspacing="0" style="width: 100%;">
+			<tr>
+				<td style="text-align: left"><b>Salario mensual:</b></td><td style="text-align: left">{{ Empleado.salario }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Salario diario:</b></td><td style="text-align: left">{{ Empleado.salarioDiario }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Forma de pago:</b></td><td style="text-align: left">{{ Empleado.formaPago }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Turno:</b></td><td style="text-align: left">{{ Empleado.turno }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>AFP de afiliaci&oacute;n:</b></td><td style="text-align: left">    {% for Afp in afp %}
+						{% if Afp == Empleado.idAfp %}
+							{{ Afp.Nombre }}
+						{% endif %}
+					{% endfor %}
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>N&uacute;mero AFP:</b></td><td style="text-align: left">{{ Empleado.numAfp }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Banco de pago:</b></td><td style="text-align: left">    {% for banco in Bancos %}
+						{% if banco == Empleado.idBanco %}
+							{{ banco.Nombre }}
+						{% endif %}
+					{% endfor %}
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Cuenta de pago:</b></td><td style="text-align: left">{{ Empleado.cuentaBanco }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Tipo de empleado:</b></td><td style="text-align: left">{{ Empleado.tipoEmpleado }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Empleado bajo contrato:</b></td><td style="text-align: left">{{ Empleado.bajoContrato }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>N&uacute;mero de contrato:</b></td><td style="text-align: left">{{ Empleado.numContrato }}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<div style="float: left; width: 100%;">
+	<div class="searchBox"><h3 style="margin: 3px;">Datos personales</h3></div>
+	<div class="table" style="width: 100%; margin-top: 10px;">
+		<table class="listing form" cellpadding="0" cellspacing="0" style="width: 100%;">
+			<tr>
+				<td style="text-align: left"><b>Departamento de residencia:</b></td><td style="text-align: left">{{ Empleado.depto}}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Municipio de residencia:</b></td><td style="text-align: left">{{ Empleado.municipio }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Fecha de nacimiento:</b></td><td style="text-align: left">{{ Empleado.fechaNacimiento | date('m/d/Y') }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Lugar de nacimiento:</b></td><td style="text-align: left">{{ Empleado.lugarNacimiento }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Nacionalidad:</b></td><td style="text-align: left">{{ Empleado.nacionalidad }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Estado Civil:</b></td><td style="text-align: left">{{ Empleado.estadoCivil }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Nombre del padre:</b></td><td style="text-align: left">{{ Empleado.nombrePadre }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Nombre de la madre:</b></td><td style="text-align: left">{{ Empleado.nombreMadre }}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<div style="float: left; width: 100%;">
+	<div class="searchBox"><h3 style="margin: 3px;">Otros Datos</h3></div>
+	<div class="table" style="width: 100%; margin-top: 10px;">
+		<table class="listing form" cellpadding="0" cellspacing="0" style="width: 100%;">
+			<tr>
+				<td style="text-align: left"><b>Nombre seg&uacute;n ISSS:</b></td><td style="text-align: left">{{ Empleado.nombreSeguro }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Nombre seg&uacute;n NIT:</b></td><td style="text-align: left">{{ Empleado.nombreNit }}</td>
+			</tr>
+			<tr>
+				<td style="text-align: left"><b>Observaciones:</b></td><td style="text-align: left">{{ Empleado.Observaciones }}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<div style="float: left; width: 100%;padding-top: 20px; margin-bottom: 15px;">
+	<div class="searchBox" style="margin: 10px;"><h3 style="margin: 3px;">Informaci&oacute;n de contacto</h3></div>
+	<table>
+		<tr>
+			<td width="100px"><img src="{{asset("img/mail.png")}}" /></td><td valign="middle"><h3>Correo El&eacute;ctronico: {{ Empleado.email }}</h3></td>
+		</tr>
+		<tr>
+			<td><img src="{{asset("img/phone.png")}}" /></td><td valign="middle"><h3>Telefono:
+				{% for tel in Telefonos %}
+					{{ tel.telefono }} |
+				{% endfor %}
+			</h3></td>
+		</tr>
+		<tr>
+			<td><img src="{{asset("img/home.png")}}" /></td><td valign="middle"><h3>Direcci&oacute;n: {{ Empleado.direccion }} </h3></td>
+		</tr>
+	</table>
+</div>
+	</table>
+</div>
+
+{% endblock %}
