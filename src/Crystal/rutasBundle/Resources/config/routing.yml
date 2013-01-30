@@ -1,0 +1,131 @@
+_index:
+    pattern:  /home
+    defaults: { _controller: CrystalrutasBundle:Default:index }
+
+listaEmpleados:
+    pattern:   /listaEmpleados/{page}
+    defaults:  { _controller: CrystalrutasBundle:Default:lista }
+
+agregarEmpleado:
+    pattern:   /agregarEmpleado
+    defaults:  { _controller: CrystalrutasBundle:Default:agregarEmpleado }
+
+modificarEmpleado:
+    pattern: /modificarEmpleado/{id}
+    defaults: { _controller: CrystalrutasBundle:Default:modificarEmpleado }
+
+eliminarEmpleado:
+    pattern:   /eliminarEmpleado/{id}
+    defaults:  { _controller: CrystalrutasBundle:Default:eliminarEmpleado }
+
+Empleado:
+    pattern:   /Empleado/{id}
+    defaults:  { _controller: CrystalrutasBundle:Default:empleado }
+
+infoDepartamento:
+    pattern:   /infoDepartamento/{id}
+    defaults:  { _controller: CrystalrutasBundle:Departamento:infoDepartamento }
+
+AgregarDepartamento:
+    pattern:   /AgregarDepartamento/
+    defaults:  { _controller: CrystalrutasBundle:Departamento:AgregarDepartamento }
+
+listaDepartamento:
+    pattern:   /listaDepartamento/
+    defaults:  { _controller: CrystalrutasBundle:Departamento:listaDepartamento }
+
+modificarDepartamento:
+    pattern:   /modificarDepartamento/{id}
+    defaults:  { _controller: CrystalrutasBundle:Departamento:modificarDepartamento }
+
+eliminarDepartamento:
+    pattern:  /eliminarDepartamento/{id}
+    defaults:  { _controller: CrystalrutasBundle:Departamento:eliminarDepartamento }
+
+listaAfp:
+    pattern:   /listaAfp/
+    defaults:  { _controller: CrystalrutasBundle:afp:listaAfp }
+
+AgregarAfp:
+    pattern:   /AgregarAfp/
+    defaults:  { _controller: CrystalrutasBundle:afp:AgregarAfp }
+
+eliminarAfp:
+    pattern:  /eliminarAfp/{id}
+    defaults:  { _controller: CrystalrutasBundle:afp:eliminarAfp }
+
+modificarAfp:
+    pattern:  /modificarAfp/{id}
+    defaults:  { _controller: CrystalrutasBundle:afp:modificarAfp }
+
+listaBancos:
+    pattern:  /listaBancos/
+    defaults:  { _controller: CrystalrutasBundle:Bancos:listaBancos }
+
+agregarBancos:
+    pattern:  /agregarBancos/
+    defaults:  { _controller: CrystalrutasBundle:Bancos:agregarBancos }
+
+eliminarBancos:
+    pattern:  /eliminarBancos/{id}
+    defaults:  { _controller: CrystalrutasBundle:Bancos:eliminarBancos }
+
+modificarBancos:
+    pattern:  /modificarBancos/{id}
+    defaults:  { _controller: CrystalrutasBundle:Bancos:modificarBancos }
+
+listaAcceso:
+    pattern:  /listaAcceso/
+    defaults:  { _controller: CrystalrutasBundle:acceso:listaAcceso }
+
+agregarAcceso:
+    pattern:  /agregarAcceso/
+    defaults:  { _controller: CrystalrutasBundle:acceso:agregarAcceso }
+
+eliminarAcceso:
+    pattern:  /eliminarAcceso/{id}
+    defaults:  { _controller: CrystalrutasBundle:acceso:eliminarAcceso }
+
+modificarAcceso:
+    pattern:  /modificarAcceso/{id}
+    defaults:  { _controller: CrystalrutasBundle:acceso:modificarAcceso }
+
+listaPlanilla:
+    pattern:  /listaPlanilla/
+    defaults:  { _controller: CrystalrutasBundle:planilla:listaPlanilla }
+
+eliminarPlanilla:
+    pattern:  /eliminarPlanilla/{id}
+    defaults:  { _controller: CrystalrutasBundle:planilla:eliminarPlanilla }
+
+listaFaltas:
+    pattern:  /listaFaltas/
+    defaults:  { _controller: CrystalrutasBundle:faltas:listaFaltas }
+
+agregarFaltas:
+    pattern:  /agregarFaltas/
+    defaults:  { _controller: CrystalrutasBundle:faltas:agregarFaltas }
+
+eliminarFaltas:
+    pattern:  /eliminarFaltas/{id}
+    defaults:  { _controller: CrystalrutasBundle:faltas:eliminarFaltas }
+
+modificarFaltas:
+    pattern:  /modificarFaltas/{id}
+    defaults:  { _controller: CrystalrutasBundle:faltas:modificarFaltas }
+
+buscarFaltas:
+    pattern:  /buscarFaltas/
+    defaults:  { _controller: CrystalrutasBundle:faltas:buscarFaltas }
+
+login:
+    pattern: /login/
+    defaults: { _controller: CrystalrutasBundle:acceso:login }
+
+searchEmpleado:
+    pattern: /search/{searchTerms}
+    defaults: { _controller: CrystalrutasBundle:Default:search }
+
+searchEmpleadoPaginated:
+    pattern: /search/{searchTerms}/{}
+    defaults: { _controller: CrystalrutasBundle:Default:search }

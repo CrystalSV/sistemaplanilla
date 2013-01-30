@@ -1,0 +1,45 @@
+{% extends 'CrystalrutasBundle:Default:index.html.twig' %}
+
+{% block center %}
+<div class="top-bar">                    
+    <div align="center"><h1>Agregar Faltas</h1></div>
+</div>
+<br /><br /><br /><br /><br /><br />
+
+<form method="post" enctype="multipart/form-data">
+<div class="table">
+<table class="listing form" cellpadding="0" cellspacing="0" style="width: 80%; margin: 0 auto;border: 0px;">
+
+ <tr>
+	            <td><strong>Descripcion de la Falta</strong></td>
+				<td><input type="text" name="txtDesc" class="text"   required value=""/></td>
+				
+</tr>
+ <tr>
+	            <td><strong>Afecta 7°</strong></td>
+				<td><select name="septimo">
+					<option value="">Seleccionar...</option>
+					<option value="1">Si</option>
+					<option value="0">No</option>
+					</select>
+				</td>
+				
+</tr>
+ <tr>
+	            <td><strong>Remuneracion</strong></td>
+				<td><select  name="rem" >
+					<option value="">Seleccionar...</option>
+					<option value="1">Si</option>
+					<option value="0">No</option>
+					</select>
+				</td>
+				
+</tr>
+<tr>
+				<td><input type="submit" value="Aceptar" name="btnAddDep" class="button"  value="Agregar Empleado" /></td>
+				<td><input type="button" name="btnCancel" class="button" onCLick="document.location.href='{{ path('listaFaltas') }}';" value="Cancelar" /></td>
+</tr>
+
+</table>
+</div>
+{% endblock %}
