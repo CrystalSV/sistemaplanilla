@@ -1,3 +1,0 @@
-crystalplanilla_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: CrystalplanillaBundle:Default:index }
