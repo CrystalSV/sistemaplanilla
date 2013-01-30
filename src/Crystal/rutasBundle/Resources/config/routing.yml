@@ -127,5 +127,21 @@ searchEmpleado:
     defaults: { _controller: CrystalrutasBundle:Default:search }
 
 searchEmpleadoPaginated:
-    pattern: /search/{searchTerms}/{}
+    pattern: /search/{searchTerms}/
     defaults: { _controller: CrystalrutasBundle:Default:search }
+
+listaActivos:
+    pattern:  /listaActivos/
+    defaults:  { _controller: CrystalrutasBundle:activos:listaActivos }
+
+agregarActivos:
+    pattern:  /agregarActivos/
+    defaults:  { _controller: CrystalrutasBundle:activos:agregarActivos }
+
+eliminarActivos:
+    pattern:  /eliminarActivos/{id}
+    defaults:  { _controller: CrystalrutasBundle:activos:eliminarActivos }
+
+modificarActivos:
+    pattern:  /modificarActivos/{id}
+    defaults:  { _controller: CrystalrutasBundle:activos:modificarActivos}
